@@ -13,5 +13,11 @@ module.exports = {
     prefix: '/api'
   },
   jwt_secret: process.env.SECRETA,
+  database: {
+    db_host: process.env.DB_HOST,
+    db_database: process.env.DB_DATABASE,
+    db_user: process.env.DB_USER,
+    db_password: process.env.DB_PASSWORD
+  },
   mqtt_broker: process.env.BROKER
 };
