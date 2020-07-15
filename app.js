@@ -1,12 +1,11 @@
 const express = require("express");
-const config = require("./config/config");
-const sequelize = require('./config/db');
+const configEnv = require("./config/configEnv");
 const logger = require("./helpers/logger");
-// Probar el logger
 const cors = require("cors");
 const morgan = require('morgan');
 const app = express();
 const mqtt = require('mqtt');
+const { Group, Sensor } = require("./models");
 
 app.use(cors());
 app.use(express.json({ extended: true }));
@@ -14,8 +13,21 @@ app.use(morgan('dev'));
 
 // app.use(config.api.prefix, require('./api/routes/index'));
 
+
+Group.create({
+  groupName: 'LEMS/Tina'
+})
+  .then(sensor => {
+    sensor.createSensor({
+      sensorName: 'dht22'
+    });
+  })
+  .catch(error => {
+    console.log(error)
+  });
+
 // Mqtt Config
-const client = mqtt.connect(config.mqtt_broker);
+const client = mqtt.connect(configEnv.mqtt_broker);
 client.on("connect", () => {
   console.log("connected");
   client.subscribe("DataCenter/datas");
@@ -46,13 +58,6 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json({ status: "error", errors: err.data });
 });
 
-app.listen(config.port, async () => {
-  console.log(`Server running on port ${config.port}`);
-  sequelize.authenticate()
-    .then(() => {
-      console.log("Conexion establecida con la base de datos");
-    })
-    .catch(error => {
-      logger.error(`An error ocurred while trying to establish a connection with the database: ${error}`);
-    });
+app.listen(configEnv.port, async () => {
+  console.log(`Server running on port ${configEnv.port}`);
 });

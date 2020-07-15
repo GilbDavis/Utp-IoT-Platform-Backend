@@ -1,4 +1,4 @@
-# Task Management REST API
+# IoT Data Management REST API
 
 This project is a Node.js/Express RESTfull API for my thesis. It function is to handle data received by Temperature and humidity sensors to serve it to a client built int React.
 

@@ -1,23 +1,25 @@
-const dotenv = require('dotenv');
-
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
-const envFound = dotenv.config();
-if (envFound.error) {
-  throw new Error("No se encontro el archivo .env");
-}
+const configEnv = require('./configEnv');
 
 module.exports = {
-  port: parseInt(process.env.PORT, 10) || 4000,
-  api: {
-    prefix: '/api'
+  "development": {
+    "username": configEnv.database.db_user,
+    "password": configEnv.database.db_password,
+    "database": `${configEnv.database.db_database}_development`,
+    "host": configEnv.database.db_host,
+    "dialect": "mysql"
   },
-  jwt_secret: process.env.SECRETA,
-  database: {
-    db_host: process.env.DB_HOST,
-    db_database: process.env.DB_DATABASE,
-    db_user: process.env.DB_USER,
-    db_password: process.env.DB_PASSWORD
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
-  mqtt_broker: process.env.BROKER
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
 };
