@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'SET NULL',
         onUpdate: "CASCADE"
       });
+
+      Group.belongsTo(models.Locations);
     }
   }
 

@@ -21,7 +21,13 @@ module.exports = {
         type: Sequelize.DATE
       },
       location_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'locations',
+          key: 'location_id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       }
     });
   },

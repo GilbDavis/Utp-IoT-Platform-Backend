@@ -31,7 +31,13 @@ module.exports = {
         // defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       sensor_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'sensors',
+          key: 'sensor_id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       }
     });
   },

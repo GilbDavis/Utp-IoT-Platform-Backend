@@ -13,18 +13,18 @@ app.use(morgan('dev'));
 
 // app.use(config.api.prefix, require('./api/routes/index'));
 
-
-Group.create({
-  groupName: 'LEMS/Tina'
-})
-  .then(sensor => {
-    sensor.createSensor({
-      sensorName: 'dht22'
-    });
-  })
-  .catch(error => {
-    console.log(error)
-  });
+// Creating associated data example with async await
+// const testDB = async () => {
+//   try {
+//     return await Group.update({ groupName: 'LEMS/TinaCurado' }, {
+//       where: {
+//         group_id: 1
+//       }
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // Mqtt Config
 const client = mqtt.connect(configEnv.mqtt_broker);

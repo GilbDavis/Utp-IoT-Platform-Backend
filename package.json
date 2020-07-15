@@ -24,7 +24,7 @@
   },
   "scripts": {
     "dev": "nodemon app.js",
-    "migrate:all": "npx sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate",
     "migrate:undo": "npx sequelize db:migrate:undo:all"
   },
   "keywords": [],

@@ -25,7 +25,9 @@ module.exports = {
         references: {
           model: 'groups',
           key: 'group_id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       }
     });
   },

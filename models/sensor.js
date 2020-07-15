@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Sensor.belongsTo(models.Group);
+      Sensor.hasMany(models.SensorData, {
+        foreignKey: 'sensor_id',
+        onDelete: 'SET NULL',
+        onUpdate: "CASCADE"
+      });
     }
   }
 
