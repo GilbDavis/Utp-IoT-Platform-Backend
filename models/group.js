@@ -13,11 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Group.hasMany(models.Sensor, {
         foreignKey: 'group_id',
+        as: 'Group',
         onDelete: 'SET NULL',
         onUpdate: "CASCADE"
       });
 
-      Group.belongsTo(models.Locations);
+      Group.belongsTo(models.Locations, {
+        foreignKey: 'location_id'
+      });
     }
   }
 
@@ -30,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     groupName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
   }, {
     sequelize,

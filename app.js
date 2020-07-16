@@ -1,3 +1,4 @@
+// Middlewares and config
 const express = require("express");
 const configEnv = require("./config/configEnv");
 const logger = require("./helpers/logger");
@@ -5,38 +6,32 @@ const cors = require("cors");
 const morgan = require('morgan');
 const app = express();
 const mqtt = require('mqtt');
-const { Group, Sensor } = require("./models");
+
+// Services
+const DataCenterService = require('./services/dataCenterService');
 
 app.use(cors());
 app.use(express.json({ extended: true }));
-app.use(morgan('dev'));
-
-// app.use(config.api.prefix, require('./api/routes/index'));
-
-// Creating associated data example with async await
-// const testDB = async () => {
-//   try {
-//     return await Group.update({ groupName: 'LEMS/TinaCurado' }, {
-//       where: {
-//         group_id: 1
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+app.use(morgan('combined'));
 
 // Mqtt Config
 const client = mqtt.connect(configEnv.mqtt_broker);
 client.on("connect", () => {
-  console.log("connected");
+  logger.debug("MQTT broker is online");
   client.subscribe("DataCenter/datas");
 });
 
-client.on("message", (topic, message) => {
+client.on("message", async (topic, message) => {
   if (topic === 'DataCenter/datas') {
     let sensorData = message.toString().split(",");
-    logger.info(`La temperatura del cuarto 1 es de: ${sensorData[0]}°C y la humedad ${sensorData[1]}%`);
+    const sensorInfo = {
+      sensorName: 'dht22',
+      sensorGroup: 'DataCenter/room'
+    };
+
+    const DataCenterServiceInstance = new DataCenterService();
+    const storedData = await DataCenterServiceInstance.saveDataCenterData(sensorData[0], sensorData[1], sensorInfo);
+    logger.info(`La temperatura del cuarto 1 es de: ${storedData.temperature}°C y la humedad ${storedData.humidity}%`);
   }
 });
 
@@ -49,7 +44,10 @@ app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
   next(error);
-});
+}); //End of mqtt configuration
+
+// app.use(config.api.prefix, require('./api/routes/index'));
+
 // Error handling purpose
 app.use((err, req, res, next) => {
   if (res.headersSent) {
@@ -59,5 +57,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(configEnv.port, async () => {
-  console.log(`Server running on port ${configEnv.port}`);
+  logger.debug(`Server running on port ${configEnv.port}`);
 });

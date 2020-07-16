@@ -7,9 +7,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      Sensor.belongsTo(models.Group);
+      Sensor.belongsTo(models.Group, {
+        foreignKey: 'group_id',
+        as: 'Group'
+      });
       Sensor.hasMany(models.SensorData, {
         foreignKey: 'sensor_id',
+        as: 'SensorData',
         onDelete: 'SET NULL',
         onUpdate: "CASCADE"
       });

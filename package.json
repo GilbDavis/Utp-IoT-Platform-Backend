@@ -15,6 +15,7 @@
     "mqtt": "^4.1.0",
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.3",
+    "socket.io": "^2.3.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

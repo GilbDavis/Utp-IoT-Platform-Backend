@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      SensorData.belongsTo(models.Sensor);
+      SensorData.belongsTo(models.Sensor, {
+        foreignKey: 'sensor_id',
+        as: 'SensorData'
+      });
     }
   }
 
@@ -28,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     humidity: {
       type: DataTypes.DOUBLE,
-      allowNull: true
-    },
-    climate: {
-      type: DataTypes.STRING,
       allowNull: true
     }
   }, {
