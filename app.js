@@ -4,13 +4,14 @@ const configEnv = require("./config/configEnv");
 const logger = require("./helpers/logger");
 const cors = require("cors");
 const morgan = require('morgan');
+const compression = require('compression');
 const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = require('./socket').init(server);
-const mqttInitializer = require('./helpers/mqttController');;
+const mqttInitializer = require('./helpers/mqttController');
 
-
+app.use(compression());
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(morgan('combined'));

@@ -15,15 +15,15 @@ const mqttInitializer = (io) => {
   client.on("message", async (topic, message) => {
     switch (topic) {
       case 'DataCenter/room': {
-        let sensorData = message.toString().split(",");
+        let sensorData = message.toString().split(","); // Message is divided and transformed into an array -> [temperature, humidity]
+        const DataCenterServiceInstance = new DataCenterService();
         const sensorInfo = {
           sensorName: 'dht22',
           sensorGroup: 'DataCenter/room'
         };
-        const DataCenterServiceInstance = new DataCenterService();
         const storedData = await DataCenterServiceInstance.saveDataCenterData(sensorData[0], sensorData[1], sensorInfo);
         logger.info(`Temperatura: ${storedData.temperature}°C y la humedad: ${storedData.humidity}%, creado: ${storedData.createdAt}`);
-        return io.emit('DataCenter/room', { temperature: storedData.temperature, humidity: storedData.humidity, createdAt: storedData.createdAt });
+        return io.emit('DataCenter/room', { id: storedData.data_id, temperature: storedData.temperature, humidity: storedData.humidity, createdAt: storedData.createdAt });
       }
       default: break;
     }

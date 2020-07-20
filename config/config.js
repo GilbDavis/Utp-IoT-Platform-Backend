@@ -9,10 +9,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": configEnv.database.db_user,
+    "password": configEnv.database.db_password,
+    "database": `${configEnv.database.db_database}_test`,
+    "host": configEnv.database.db_host,
     "dialect": "mysql"
   },
   "production": {
