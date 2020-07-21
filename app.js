@@ -17,9 +17,10 @@ app.use(express.json({ extended: true }));
 app.use(morgan('combined'));
 
 // Initialize mqtt connection with broker and sensors
-mqttInitializer(io);
+// mqttInitializer(io);
 
-// app.use(config.api.prefix, require('./api/routes/index'));
+// Initialize all routes with a prefix, by default it is "/api"
+app.use(configEnv.api.prefix, require('./api/routes/index'));
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
