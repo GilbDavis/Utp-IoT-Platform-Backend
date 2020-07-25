@@ -29,7 +29,7 @@ module.exports = {
       sensor_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'sensors',
+          model: 'Sensors',
           key: 'sensor_id'
         },
         onUpdate: 'CASCADE',

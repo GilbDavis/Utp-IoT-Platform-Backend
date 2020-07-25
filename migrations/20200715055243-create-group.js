@@ -26,7 +26,7 @@ module.exports = {
       location_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'locations',
+          model: 'Locations',
           key: 'location_id'
         },
         onUpdate: 'CASCADE',
