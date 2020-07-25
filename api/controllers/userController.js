@@ -47,7 +47,7 @@ exports.authenticateUser = async (req, res, next) => {
   try {
     const userServiceInstance = new UserService();
     const usuario = await userServiceInstance.userIsAuthenticated(req.user.id);
-    return res.status(200).json({ status: "success", data: { usuario } });
+    return res.status(200).json({ status: "success", usuario });
   } catch (error) {
     return next(error);
   }

@@ -17,7 +17,7 @@ app.use(express.json({ extended: true }));
 app.use(morgan('combined'));
 
 // Initialize mqtt connection with broker and sensors
-// mqttInitializer(io);
+mqttInitializer(io);
 
 // Initialize all routes with a prefix, by default it is "/api"
 app.use(configEnv.api.prefix, require('./api/routes/index'));
