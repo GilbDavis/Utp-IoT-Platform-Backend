@@ -21,6 +21,7 @@ module.exports = {
     "database": configEnv.database.production.db_dabatase,
     "host": configEnv.database.production.db_host,
     "dialect": configEnv.database.production.db_dialect,
-    "port": configEnv.database.production.db_port
+    "port": configEnv.database.production.db_port,
+    "timezone": "-05:00"
   }
 };

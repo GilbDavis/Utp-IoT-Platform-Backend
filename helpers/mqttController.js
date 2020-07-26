@@ -2,7 +2,7 @@ const logger = require("./logger");
 const DataStoreService = require('../services/dataStoreService');
 const mqtt = require('mqtt');
 const configEnv = require('../config/configEnv');
-const { format } = require('date-fns');
+const { format } = require("date-fns");
 
 const mqttInitializer = (io) => {
 
@@ -31,7 +31,6 @@ const mqttInitializer = (io) => {
         };
         logger.debug(`Temperatura: ${sensorData[0]}°C y la humedad: ${sensorData[1]}%`);
         return await DataCenterServiceInstance.saveDataCenterData(sensorData[0], sensorData[1], sensorInfo);
-
       }
       case "LEMS/tina/realTime": {
         const sensorData = message.toString();
