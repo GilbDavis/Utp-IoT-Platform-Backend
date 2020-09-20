@@ -24,7 +24,9 @@
     "eslint": "^7.4.0",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "sinon": "^9.0.3",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "node app.js",
@@ -33,7 +35,7 @@
     "migrate:dev:undo": "npx sequelize db:migrate:undo:all",
     "migrate:test": "npx sequelize-cli db:migrate --env 'test'",
     "migrate:test:undo": "npx sequelize-cli db:migrate:undo:all --env 'test'",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "keywords": [],
   "author": "",
